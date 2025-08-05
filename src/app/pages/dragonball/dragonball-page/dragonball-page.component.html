@@ -1,0 +1,32 @@
+<h1>DragonBall Page</h1>
+<hr>
+
+<section class="">
+
+    <div>
+        <h3>agregar:</h3>
+            <input type="text" placeholder="nombre">
+            <input type="text" placeholder="descripcion">
+            <button>agregar</button>
+    </div>
+
+    <div>
+      <ol>
+        @for (character of characters(); track character.id;let index = $index) {
+          
+          <li>{{ index + 1 }} - {{ character.name }} - {{ character.power }}</li>
+          @if (character.power > 5000) {
+            <p>es fuerte</p>
+          }
+          @else {
+            <p>es debil</p>
+          }
+          
+        }
+      </ol>  
+    </div>
+
+
+
+
+</section>

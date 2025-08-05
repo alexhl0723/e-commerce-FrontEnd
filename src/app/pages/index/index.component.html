@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopcart - Productos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+       
+
+        <!-- Main Header -->
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="bg-green-600 text-white p-2 rounded-lg mr-3">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Shopcart</h1>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors">
+                            Categorías <i class="fas fa-chevron-down ml-1"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Auriculares</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Smartphones</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Laptops</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Gaming</a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-gray-700 hover:text-green-600 transition-colors">Ofertas</a>
+                    <a href="#" class="text-gray-700 hover:text-green-600 transition-colors">Novedades</a>
+                    <a href="#" class="text-gray-700 hover:text-green-600 transition-colors">Entrega</a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-md mx-8 hidden md:block">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar productos..." 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <button class="absolute right-3 top-2.5 text-gray-400 hover:text-green-600">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors">
+                        <i class="fas fa-user mr-2"></i>
+                        <span class="hidden md:inline">Cuenta</span>
+                    </button>
+                    <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors relative">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        <span class="hidden md:inline">Carrito</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button class="lg:hidden text-gray-700 hover:text-green-600" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden bg-white border-t hidden">
+            <div class="container mx-auto px-4 py-4">
+                <div class="mb-4">
+                    <input type="text" placeholder="Buscar productos..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <nav class="space-y-2">
+                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Categorías</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Ofertas</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Novedades</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Entrega</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-r from-green-50 to-blue-50 py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Obtén hasta 50% de descuento<br>
+                        en auriculares seleccionados
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6">Descubre nuestra colección premium con ofertas increíbles</p>
+                    <button class="bg-green-800 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-colors duration-300 transform hover:scale-105">
+                        Comprar ahora
+                    </button>
+                </div>
+                <div class="hidden md:block">
+                    <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=300&fit=crop&crop=center" 
+                         alt="Mujer con auriculares" class="w-96 h-80 object-cover rounded-lg shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-600 text-white p-2 rounded-lg mr-3">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Shopcart</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Tu destino de compras online de confianza con productos de calidad y excelente servicio.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Atención al Cliente</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Contáctanos</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Información de Envío</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Devoluciones</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Garantías</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Acerca de</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Carreras</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Prensa</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Sostenibilidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Suscríbete para recibir actualizaciones sobre nuevos productos y ofertas</p>
+                    <div class="flex mb-4">
+                        <input type="email" placeholder="Tu email" 
+                               class="flex-1 px-4 py-2 rounded-l-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <button class="bg-green-600 px-4 py-2 rounded-r-lg hover:bg-green-700 transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                        <span><i class="fas fa-shield-alt mr-1"></i>Compra segura</span>
+                        <span><i class="fas fa-truck mr-1"></i>Envío rápido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Shopcart. Todos los derechos reservados. | <a href="#" class="hover:text-white">Política de Privacidad</a> | <a href="#" class="hover:text-white">Términos de Servicio</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
