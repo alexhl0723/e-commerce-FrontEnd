@@ -8,6 +8,7 @@ import { Producto } from '../../interfaces/producto.interface';
 export class ProductoService {
 
   private baseUrl = 'http://localhost:8084/producto';
+  private uploadUrl = 'http://localhost:8084/imagenes/subir';
   constructor(private http: HttpClient) { }
 
   private getHeader(){
@@ -42,6 +43,14 @@ export class ProductoService {
 
   eliminarProducto(id: number){
     return this.http.delete<Producto>(`${this.baseUrl}/${id}`, this.getHeader());
+  }
+
+  // Subida de imágenes usando FormData (no establecer Content-Type manualmente)
+  subirImagenes(files: File[]) {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('imagenes', file));
+    // El interceptor JWT añadirá el Authorization automáticamente
+    return this.http.post<any>(this.uploadUrl, formData);
   }
 
 }

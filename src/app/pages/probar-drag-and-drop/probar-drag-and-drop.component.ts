@@ -63,7 +63,7 @@ export class ProbarDragAndDropComponent {
           this.imagenesProductos = res.imagenesProductos;
         },
         error: err => {
-          console.error('❌ Error al subir imágenes:', err);
+          console.error('Error al subir las o imagenes ', err);
         }
       });
   }
