@@ -8,47 +8,17 @@ import { RolesComponent } from './pages/roles/roles.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { ProbarDragAndDropComponent } from './pages/probar-drag-and-drop/probar-drag-and-drop.component';
 import { IndexComponent } from './pages/index/index.component';
+import { UserComponent } from './pages/user/user.component';
 
 export const routes: Routes = [
-
-    {
-        path: '',//cambiar esto por el index
-        component: IndexComponent
-    },
-    {
-        path: 'categorias',
-        component: CategoriasComponent
-    },
-    {
-        path: 'hero',
-        component: HeroComponent
-    },
-    {
-        path: 'dragonball',
-        component: DragonballPageComponent
-    },
-    {
-        path: 'counter',
-        component: CounterComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'roles',
-        component: RolesComponent
-    },
-    {
-        path: 'productos',
-        component: ProductosComponent
-    },
-    {
-        path: 'probar-drag-and-drop',
-        component: ProbarDragAndDropComponent
-    },
-
-
-
-
+  { path: '', component: IndexComponent }, // index
+  { path: 'categorias', component: CategoriasComponent },
+  { path: 'hero', component: HeroComponent },
+  { path: 'dragonball', component: DragonballPageComponent },
+  { path: 'counter', component: CounterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'roles', component: RolesComponent },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'probar-drag-and-drop', component: ProbarDragAndDropComponent },
+  { path: 'user', component: UserComponent }
 ];
