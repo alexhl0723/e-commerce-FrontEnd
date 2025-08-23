@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
-import { RegisterRequest } from '../../interfaces/usuario.interface';
+import { RegisterRequest } from '../../interfaces/usuario.interfas';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../services/notification/notification.service';
 
 @Component({
   standalone: true, 
@@ -25,7 +26,7 @@ export class UserComponent {
   successMessage: string = ''; 
   isLoading: boolean = false; 
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private notificationService: NotificationService) {}
 
   // Método para registrar usuario
   registrarUsuario() {
@@ -36,7 +37,7 @@ export class UserComponent {
     this.userService.register(this.nuevoUsuario).subscribe({
       next: (response) => {
         console.log('Usuario registrado con éxito:', response);
-        
+        this.notificationService.success('Usuario registrado con éxito', response.message || '✅ Usuario registrado correctamente');
         this.successMessage = response.message || '✅ Usuario registrado correctamente';
         this.nuevoUsuario = {
           nombres: '',
@@ -56,6 +57,7 @@ export class UserComponent {
       },
       error: (err) => {
         this.error = err.error?.message || err.error || 'Error al registrar usuario';
+        this.notificationService.error('Error al registrar usuario', this.error);
         this.successMessage = ''; 
         this.isLoading = false;
         console.error('Error al registrar usuario:', err);

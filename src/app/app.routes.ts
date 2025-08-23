@@ -9,9 +9,13 @@ import { ProductosComponent } from './pages/productos/productos.component';
 import { ProbarDragAndDropComponent } from './pages/probar-drag-and-drop/probar-drag-and-drop.component';
 import { IndexComponent } from './pages/index/index.component';
 import { UserComponent } from './pages/user/user.component';
+import { TiendaComponent } from './pages/tienda/tienda.component';
+import { DetalleProductoComponent } from './pages/detalle-producto/detalle-producto.component';
 
 export const routes: Routes = [
   { path: '', component: IndexComponent }, // index
+  { path: 'tienda', component: TiendaComponent },
+  { path: 'producto/:id', component: DetalleProductoComponent },
   { path: 'categorias', component: CategoriasComponent },
   { path: 'hero', component: HeroComponent },
   { path: 'dragonball', component: DragonballPageComponent },

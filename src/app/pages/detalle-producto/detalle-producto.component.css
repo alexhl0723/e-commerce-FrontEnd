@@ -1,0 +1,103 @@
+/* detalle-producto.component.css */
+
+/* Animaciones para las imágenes */
+.product-image {
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.02);
+}
+
+/* Estilos para las miniaturas de la galería */
+.gallery-thumbnail {
+  transition: all 0.2s ease;
+}
+
+.gallery-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.gallery-thumbnail.selected {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Estilos para los botones de cantidad */
+.quantity-button {
+  transition: all 0.2s ease;
+}
+
+.quantity-button:hover {
+  background-color: #f1f5f9;
+  transform: scale(1.05);
+}
+
+/* Estilos para el botón principal */
+.primary-button {
+  transition: all 0.3s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos para el estado del stock */
+.stock-indicator {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-thumbnails {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Estilos para el breadcrumb */
+.breadcrumb-item {
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item:hover {
+  color: #1e293b;
+}
+
+/* Estilos para las especificaciones */
+.spec-item {
+  transition: background-color 0.2s ease;
+}
+
+.spec-item:hover {
+  background-color: #f8fafc;
+}
+
+/* Estilos para el loading */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,63 @@
+/* tienda.component.css */
+
+/* Estilos para el line-clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Animaciones para las cards */
+.product-card {
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Estilos para el carrito lateral */
+.carrito-sidebar {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Estilos para las imágenes de productos */
+.product-image {
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para los botones de cantidad */
+.quantity-controls button {
+  transition: all 0.2s ease;
+}
+
+.quantity-controls button:hover {
+  background-color: #f1f5f9;
+}
+
+/* Estilos para el overlay del carrito */
+.carrito-overlay {
+  backdrop-filter: blur(4px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carrito-sidebar {
+    width: 100%;
+    max-width: none;
+  }
+}
