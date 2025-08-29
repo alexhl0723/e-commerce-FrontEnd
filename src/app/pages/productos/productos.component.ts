@@ -408,4 +408,46 @@ export class ProductosComponent {
     return `${this.backendHost}${url}`;
   }
 
+  
+cambiarEstadoProducto(producto: Producto) {
+  const nuevoEstado = producto.estado !== 1;
+
+  // 1. Actualizar la vista INMEDIATAMENTE (optimistic update)
+  const productosActualizados = this.productos().map(prod =>
+    prod.idProducto === producto.idProducto
+      ? { ...prod, estado: nuevoEstado ? 1 : 0 }
+      : prod
+  );
+  this.productos.set([...productosActualizados]);
+
+  // 2. Mostrar notificación amigable
+  this.notificationService.success(
+    'Estado actualizado',
+    `${producto.nombre} está ${nuevoEstado ? 'activo' : 'inactivo'}`
+  );
+
+  // 3. Hacer la petición al backend
+  this.productoService.actualizarEstado(producto.idProducto!, nuevoEstado).subscribe({
+    next: () => {
+      console.log('Backend sincronizado correctamente ✅');
+    },
+    error: (err) => {
+      console.error('Error en backend pero ya se actualizó la vista:', err);
+
+      // 🔄 Opcional: revertir el cambio en caso de error
+      const revertidos = this.productos().map(prod =>
+        prod.idProducto === producto.idProducto
+          ? { ...prod, estado: producto.estado }
+          : prod
+      );
+      this.productos.set([...revertidos]);
+
+      this.notificationService.error(
+        'Error al actualizar',
+        'No se pudo sincronizar con el servidor'
+      );
+    }
+  });
+}
+
 }

@@ -199,15 +199,39 @@
 
               <!-- Estado -->
               <td class="py-4 px-6">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span *ngIf="categoria.estado === 1" 
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   <span class="w-1.5 h-1.5 rounded-full mr-1.5 bg-green-400"></span>
                   Activa
+                </span>
+                <span *ngIf="categoria.estado !== 1" 
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  <span class="w-1.5 h-1.5 rounded-full mr-1.5 bg-red-400"></span>
+                  Inactiva
                 </span>
               </td>
 
               <!-- Acciones -->
               <td class="py-4 px-6">
                 <div class="flex items-center justify-end gap-2">
+                  <!-- Botón toggle estado -->
+                  <button 
+                    (click)="cambiarEstado(categoria)"
+                    [class]="categoria.estado === 1 ? 
+                      'flex items-center gap-1.5 text-orange-600 hover:text-orange-700 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition' : 
+                      'flex items-center gap-1.5 text-green-600 hover:text-green-700 hover:bg-green-50 px-3 py-1.5 rounded-lg transition'"
+                    [title]="categoria.estado === 1 ? 'Desactivar categoría' : 'Activar categoría'">
+                    <!-- Icono para desactivar (cuando está activa) -->
+                    <svg *ngIf="categoria.estado === 1" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"></path>
+                    </svg>
+                    <!-- Icono para activar (cuando está inactiva) -->
+                    <svg *ngIf="categoria.estado !== 1" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {{ categoria.estado === 1 ? 'Desactivar' : 'Activar' }}
+                  </button>
+                  
                   <button 
                     (click)="editarCategoria(categoria)"
                     class="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">

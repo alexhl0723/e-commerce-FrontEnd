@@ -66,56 +66,65 @@ export class TiendaComponent {
       this.categorias.set(categorias);
     });
   }
-
-  cargarCarrito() {
-    this.carritoService.getCarritoPorIdCliente(this.idUsuario).subscribe(carrito => {
-      // Completar la información del producto en cada item del carrito
-      const carritoCompleto = carrito.map(item => {
+cargarCarrito() {
+  this.carritoService.getCarritoPorIdCliente(this.idUsuario).subscribe(carrito => {
+    // 🔹 Primero filtramos los productos activos
+    const carritoCompleto: Carrito[] = carrito
+      .filter(item => {
         const producto = this.productos().find(p => p.idProducto === item.idProducto);
-        if (producto) {
-          return {
-            ...item,
-            producto: {
-              nombre: producto.nombre,
-              precio: producto.precio,
-              imgUrl: producto.imgUrl,
-              marca: producto.marca
-            }
-          };
-        }
-        return item;
+        return producto && producto.estado === 1; // ✅ Solo si está activo
+      })
+      .map(item => {
+        const producto = this.productos().find(p => p.idProducto === item.idProducto)!;
+
+        return {
+          ...item,
+          producto: {
+            nombre: producto.nombre,
+            precio: producto.precio,
+            imgUrl: producto.imgUrl,
+            marca: producto.marca
+          }
+        } as Carrito;
       });
-      this.carrito.set(carritoCompleto);
-    });
+
+    this.carrito.set(carritoCompleto);
+  });
+}
+
+
+
+
+// Filtrar productos
+get productosFiltrados(): Producto[] {
+  let productos = this.productos();
+
+  // ✅ Solo productos activos
+  productos = productos.filter(p => p.estado === 1);
+
+  // ✅ Filtro por categoría
+  if (this.categoriaSeleccionada() > 0) {
+    productos = productos.filter(p => p.idCategoria === this.categoriaSeleccionada());
   }
 
-  // Filtrar productos
-  get productosFiltrados(): Producto[] {
-    let productos = this.productos();
-    
-    // Filtro por categoría
-    if (this.categoriaSeleccionada() > 0) {
-      productos = productos.filter(p => p.idCategoria === this.categoriaSeleccionada());
-    }
-
-    
-    // Filtro por término de búsqueda
-    if (this.terminoBusqueda().trim()) {
-      const termino = this.terminoBusqueda().toLowerCase();
-      productos = productos.filter(p => 
-        p.nombre.toLowerCase().includes(termino) ||
-        p.marca.toLowerCase().includes(termino) ||
-        p.descripcion.toLowerCase().includes(termino)
-      );
-    }
-    
-    // Filtro por precio
-    productos = productos.filter(p => 
-      p.precio >= this.precioMin() && p.precio <= this.precioMax()
+  // ✅ Filtro por término de búsqueda
+  const termino = this.terminoBusqueda().trim().toLowerCase();
+  if (termino) {
+    productos = productos.filter(p =>
+      p.nombre.toLowerCase().includes(termino) ||
+      p.marca.toLowerCase().includes(termino) ||
+      (p.descripcion?.toLowerCase().includes(termino) ?? false) // 🛑 safe optional
     );
-    
-    return productos;
   }
+
+  // ✅ Filtro por precio (manejo de nulls)
+  productos = productos.filter(p =>
+    (this.precioMin() == null || p.precio >= this.precioMin()) &&
+    (this.precioMax() == null || p.precio <= this.precioMax())
+  );
+
+  return productos;
+}
 
   // Agregar al carrito
   agregarAlCarrito(producto: Producto) {
