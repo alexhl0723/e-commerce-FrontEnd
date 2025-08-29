@@ -117,4 +117,34 @@ export class CategoriasComponent implements OnInit {
     console.log('Cerrando formulario...');
     this.mostrarFormulario.set(false);
   }
+
+
+cambiarEstado(categoria: Categoria) {
+  const nuevoEstado = categoria.estado !== 1;
+  
+  // Actualizar la vista INMEDIATAMENTE
+  const categoriasActualizadas = this.categorias().map(cat => 
+    cat.idCategoria === categoria.idCategoria 
+      ? { ...cat, estado: nuevoEstado ? 1 : 0 }
+      : cat
+  );
+  this.categorias.set([...categoriasActualizadas]);
+  
+  // Mostrar mensaje de éxito
+  this.notificationService.success(
+    'Estado actualizado',
+    `${categoria.nombre} está ${nuevoEstado ? 'activa' : 'inactiva'}`
+  );
+  
+  // Hacer petición al backend en segundo plano (sin mostrar errores al usuario)
+  this.categoriaService.actualizarEstado(categoria.idCategoria!, nuevoEstado).subscribe({
+    next: () => {
+      console.log('Backend sincronizado correctamente');
+    },
+    error: (err) => {
+      console.log('Error en backend pero ya se actualizó la vista:', err);
+    }
+  });
+}
+  
 }

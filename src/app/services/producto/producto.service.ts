@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Producto } from '../../interfaces/producto.interface';
 
 @Injectable({
@@ -45,12 +45,29 @@ export class ProductoService {
     return this.http.delete<Producto>(`${this.baseUrl}/${id}`, this.getHeader());
   }
 
-  // Subida de imágenes usando FormData (no establecer Content-Type manualmente)
+  // Subida de imágenes usando FormData
   subirImagenes(files: File[]) {
     const formData = new FormData();
     files.forEach((file) => formData.append('imagenes', file));
-    // El interceptor JWT añadirá el Authorization automáticamente
-    return this.http.post<any>(this.uploadUrl, formData);
+    
+    // Get the token manually since we're using FormData
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+      // Don't set Content-Type, let the browser set it with the correct boundary
+    });
+    
+    return this.http.post<any>(this.uploadUrl, formData, { headers });
+  }
+  actualizarEstado(id: number, estado: boolean) {
+    return this.http.put(
+      `${this.baseUrl}/${id}/estado?estado=${estado}`,
+      {},
+      {
+        ...this.getHeader(),
+        responseType: 'text' as 'json'
+      }
+    );
   }
 
 }
