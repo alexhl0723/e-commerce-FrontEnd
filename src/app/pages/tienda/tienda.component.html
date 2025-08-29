@@ -38,7 +38,8 @@
           <div class="mb-6">
             <label class="block text-sm font-medium text-slate-700 mb-2">Buscar</label>
             <input 
-              [(ngModel)]="terminoBusqueda"
+              [ngModel]="terminoBusqueda()"
+              (ngModelChange)="terminoBusqueda.set($event)"
               type="text" 
               placeholder="Nombre, marca..."
               class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
@@ -48,10 +49,11 @@
           <div class="mb-6">
             <label class="block text-sm font-medium text-slate-700 mb-2">Categoría</label>
             <select 
-              [(ngModel)]="categoriaSeleccionada"
+              [ngModel]="categoriaSeleccionada()"
+              (ngModelChange)="categoriaSeleccionada.set($event)"
               class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
-              <option [value]="0">Todas las categorías</option>
-              <option *ngFor="let cat of categorias()" [value]="cat.idCategoria">
+              <option [ngValue]="0">Todas las categorías</option>
+              <option *ngFor="let cat of categorias()" [ngValue]="cat.idCategoria">
                 {{ cat.nombre }}
               </option>
             </select>
@@ -62,12 +64,14 @@
             <label class="block text-sm font-medium text-slate-700 mb-2">Rango de precios</label>
             <div class="space-y-3">
               <input 
-                [(ngModel)]="precioMin"
+                [ngModel]="precioMin()"
+                (ngModelChange)="precioMin.set($event)"
                 type="number" 
                 placeholder="Mínimo"
                 class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
               <input 
-                [(ngModel)]="precioMax"
+                [ngModel]="precioMax()"
+                (ngModelChange)="precioMax.set($event)"
                 type="number" 
                 placeholder="Máximo"
                 class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">

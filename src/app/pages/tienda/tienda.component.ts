@@ -28,7 +28,7 @@ export class TiendaComponent {
   carrito = signal<Carrito[]>([]);
   
   // Filtros
-  categoriaSeleccionada = signal<number>(0);
+  categoriaSeleccionada: WritableSignal<number> = signal(0);
   terminoBusqueda = signal<string>('');
   precioMin = signal<number>(0);
   precioMax = signal<number>(10000);
@@ -97,6 +97,7 @@ export class TiendaComponent {
     if (this.categoriaSeleccionada() > 0) {
       productos = productos.filter(p => p.idCategoria === this.categoriaSeleccionada());
     }
+
     
     // Filtro por término de búsqueda
     if (this.terminoBusqueda().trim()) {
