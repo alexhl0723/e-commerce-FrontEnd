@@ -3,105 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopcart - Productos</title>
+    <title>OsterCart - Tienda Oficial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#005A9C',     // Azul corporativo, elegante
+                        'brand-dark': '#1F2937',     // Gris oscuro (Ahora fondo principal)
+                        'brand-light': '#F9FAFB',    // Fondo muy claro (Ahora texto principal)
+                        'brand-gold': '#EAAA00',     // Dorado/Ámbar para acentos (ofertas)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    keyframes: {
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseAccent: { 
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '.7' },
+                        },
+                        ripple: {
+                            '0%': { transform: 'scale(0.8)', opacity: '1' },
+                            '100%': { transform: 'scale(2.4)', opacity: '0' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-down': 'fadeInDown 0.8s ease-out',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'pulse-accent': 'pulseAccent 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'ripple-slow': 'ripple 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-image-zoom {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        /* Eliminamos el hover del banner ya que no tiene fondo propio */
+        /* .hero-banner:hover .hero-image-zoom {
+            transform: scale(1.05);
+        } */
 
+        .product-card-hover {
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        /* Sombra más sutil para las cards sobre fondo oscuro */
+        .product-card-hover:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .btn-call-to-action {
+            position: relative;
+            z-index: 10;
+        }
+        .btn-call-to-action::before,
+        .btn-call-to-action::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 9999px;
+            border: 1px solid currentColor;
+            opacity: 0;
+            z-index: -1;
+        }
+        .btn-call-to-action::before {
+            width: 100%; height: 100%;
+            animation: ripple 3s ease-out infinite; 
+            animation-delay: 0s;
+        }
+        .btn-call-to-action::after {
+            width: 100%; height: 100%;
+            animation: ripple 3s ease-out infinite;
+            animation-delay: 1.5s;
+        }
+        .btn-call-to-action:hover::before,
+        .btn-call-to-action:hover::after {
+             opacity: 0.3;
+        }
+
+        .cta-banner-bg {
+            background-image: url('https://placehold.co/1200x500/1F2937/FFFFFF/png?text=Fondo+de+Cocina+Premium');
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-       
+<body class="bg-brand-dark text-brand-light font-sans">
 
-        <!-- Main Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <div class="bg-green-600 text-white p-2 rounded-lg mr-3">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-800">Shopcart</h1>
+                <div class="flex items-center animate-fade-in-down">
+                    <div class="bg-brand-blue text-white p-2 rounded-lg mr-3 shadow-xl">
+                        <i class="fas fa-bolt"></i> </div>
+                    <h1 class="text-2xl font-extrabold text-brand-dark">Oster<span class="text-brand-blue">Cart</span></h1>
                 </div>
 
-                <!-- Navigation -->
                 <nav class="hidden lg:flex items-center space-x-8">
-                    <div class="relative group">
-                        <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors">
-                            Categorías <i class="fas fa-chevron-down ml-1"></i>
+                    <div class="relative group animate-fade-in-down" style="animation-delay: 0.1s;">
+                        <button class="flex items-center text-gray-700 hover:text-brand-blue transition-colors font-semibold">
+                            Categorías <i class="fas fa-chevron-down ml-1 text-sm"></i>
                         </button>
-                        <div class="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="/tienda" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Auriculares</a>
-                            <a href="/tienda" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Smartphones</a>
-                            <a href="/tienda" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Laptops</a>
-                            <a href="/tienda" class="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600">Gaming</a>
+                        <div class="absolute top-full left-0 mt-2 w-48 bg-white shadow-2xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 ring-1 ring-gray-100">
+                            <a href="/tienda" class="block px-4 py-3 text-gray-700 hover:bg-brand-blue hover:text-white transition-colors duration-150">Licuadoras</a>
+                            <a href="/tienda" class="block px-4 py-3 text-gray-700 hover:bg-brand-blue hover:text-white transition-colors duration-150">Cafetera y Hervidores</a>
+                            <a href="/tienda" class="block px-4 py-3 text-gray-700 hover:bg-brand-blue hover:text-white transition-colors duration-150">Horneado y Cocción</a>
+                            <a href="/tienda" class="block px-4 py-3 text-gray-700 hover:bg-brand-blue hover:text-white transition-colors duration-150">Cocina y Hogar</a>
                         </div>
                     </div>
-                    <a href="/tienda" class="text-gray-700 hover:text-green-600 transition-colors">Ofertas</a>
-                    <a href="/tienda" class="text-gray-700 hover:text-green-600 transition-colors">Novedades</a>
-                    <a href="/tienda" class="text-gray-700 hover:text-green-600 transition-colors">Entrega</a>
+                    <a href="/tienda" class="text-gray-700 hover:text-brand-blue transition-colors font-semibold animate-fade-in-down" style="animation-delay: 0.2s;">Ofertas</a>
+                    <a href="/tienda" class="text-gray-700 hover:text-brand-blue transition-colors font-semibold animate-fade-in-down" style="animation-delay: 0.3s;">Novedades</a>
+                    <a href="/tienda" class="text-gray-700 hover:text-brand-blue transition-colors font-semibold animate-fade-in-down" style="animation-delay: 0.4s;">Contacto</a>
                 </nav>
 
-                <!-- Search Bar -->
-                <div class="flex-1 max-w-md mx-8 hidden md:block">
-                    <div class="relative">
-                        <input type="text" placeholder="Buscar productos..." 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                        <button class="absolute right-3 top-2.5 text-gray-400 hover:text-green-600">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- User Actions -->
-                <div class="flex items-center space-x-4">
-                    <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors">
-                        <i class="fas fa-user mr-2"></i>
-                        <span class="hidden md:inline">Cuenta</span>
-                    </button>
-                    <button class="flex items-center text-gray-700 hover:text-green-600 transition-colors relative">
-                        <i class="fas fa-shopping-cart mr-2"></i>
-                        <a href="/tienda"><span  class="hidden md:inline">Carrito</span></a>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                    </button>
-                    <button class="lg:hidden text-gray-700 hover:text-green-600" onclick="toggleMobileMenu()">
-                        <i class="fas fa-bars"></i>
+                    <button class="lg:hidden text-gray-700 hover:text-brand-blue p-2 rounded-full hover:bg-gray-100" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Mobile Menu -->
+
         <div id="mobile-menu" class="lg:hidden bg-white border-t hidden">
             <div class="container mx-auto px-4 py-4">
                 <div class="mb-4">
                     <input type="text" placeholder="Buscar productos..." 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue">
                 </div>
                 <nav class="space-y-2">
-                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Categorías</a>
-                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Ofertas</a>
-                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Novedades</a>
-                    <a href="#" class="block py-2 text-gray-700 hover:text-green-600">Entrega</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-brand-blue font-medium border-b border-gray-100">Categorías</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-brand-blue font-medium border-b border-gray-100">Ofertas</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-brand-blue font-medium border-b border-gray-100">Novedades</a>
+                    <a href="#" class="block py-2 text-gray-700 hover:text-brand-blue font-medium">Entrega</a>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="bg-gradient-to-r from-green-50 to-blue-50 py-12">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">¡Bienvenido a ClicBox!</h2>
-            <p class="text-xl text-gray-600 mb-8">Descubre productos increíbles a precios increíbles</p>
-            <a href="/tienda" 
-               class="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-lg transform hover:scale-105">
-                <i class="fas fa-shopping-cart mr-2"></i>
-                Ir a la Tienda
-            </a>
-        </div>
-    </section>
+    <main>
+        <section class="hero-banner pt-16 pb-20 overflow-hidden">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center justify-between">
+                    <div class="lg:w-1/2 mb-10 lg:mb-0 text-center lg:text-left animate-fade-in-up">
+                        <p class="text-xl text-brand-gold font-bold mb-3 tracking-widest uppercase">Hasta 40% OFF en selección</p>
+                        <h2 class="text-6xl font-extrabold text-brand-light leading-tight mb-6">
+                            La <span class="text-brand-blue">Potencia</span> de Oster <br class="hidden sm:inline"> en tu Cocina
+                        </h2>
+                        <p class="text-lg text-gray-300 mb-10 max-w-lg mx-auto lg:mx-0">
+                            Lleva la innovación y calidad de Oster a tu hogar con nuestros productos exclusivos y la mejor garantía del mercado.
+                        </p>
+                        <a href="/tienda" 
+                           class="btn-call-to-action inline-flex items-center px-12 py-4 bg-brand-blue text-blue-600 font-extrabold text-lg rounded-full hover:bg-blue-800 transition-all duration-300 shadow-2xl transform hover:scale-105 overflow-hidden">
+                            <i class="fas fa-arrow-alt-circle-right mr-3"></i>
+                            Explora Nuestra Tienda
+                        </a>
+                    </div>
+                    
+                    <div class="lg:w-1/2 flex justify-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="relative w-full max-w-md">
+                            <div class="w-full h-80 lg:h-96 bg-contain bg-no-repeat bg-center rounded-xl hero-image-zoom" 
+                                 style="background-image: url('https://osterpe.vtexassets.com/assets/vtex.file-manager-graphql/images/0fa26eea-7f7a-4e51-8a1b-68f3da02cdea___6e531a43325209774a3a83f697148887.jpg');">
+                            </div>
+                            <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 bg-brand-gold text-brand-dark font-bold rounded-full p-4 shadow-xl text-sm animate-pulse-accent">
+                                ¡Nuevo!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  
+        <section class="py-12 border-t border-b border-gray-700">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="animate-fade-in-up">
+                        <i class="fas fa-shipping-fast text-4xl text-brand-blue mb-3"></i>
+                        <h4 class="font-bold text-lg text-brand-light">Envío Gratis</h4>
+                        <p class="text-gray-400 text-sm">En pedidos superiores a $50</p>
+                    </div>
+                    <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                        <i class="fas fa-lock text-4xl text-brand-blue mb-3"></i>
+                        <h4 class="font-bold text-lg text-brand-light">Pago Seguro</h4>
+                        <p class="text-gray-400 text-sm">Cifrado de 256 bits</p>
+                    </div>
+                    <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <i class="fas fa-exchange-alt text-4xl text-brand-blue mb-3"></i>
+                        <h4 class="font-bold text-lg text-brand-light">Devolución Fácil</h4>
+                        <p class="text-gray-400 text-sm">30 días para cambiar</p>
+                    </div>
+                    <div class="animate-fade-in-up" style="animation-delay: 0.3s;">
+                        <i class="fas fa-headset text-4xl text-brand-blue mb-3"></i>
+                        <h4 class="font-bold text-lg text-brand-light">Soporte 24/7</h4>
+                        <p class="text-gray-400 text-sm">Expertos a tu servicio</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-extrabold text-center text-brand-light mb-12 animate-fade-in-up">
+                    <span class="text-brand-blue">Imprescindibles</span> para tu Hogar
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://osterpe.vtexassets.com/arquivos/ids/159271-1600-auto?v=638356866855330000&width=1600&height=auto&aspect=true');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Licuadora Clásica</h3>
+                        <p class="text-gray-500 text-sm mb-3">Motor de 600W, Jarra de vidrio.</p>
+                        <p class="text-2xl font-extrabold text-red-500 mb-4">$59.99 <span class="text-gray-400 line-through text-lg">$89.99</span></p>
+                        <a href="/tienda" class="inline-block px-6 py-2 bg-brand-gold text-brand-dark font-bold rounded-full hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                            <i class="fas fa-cart-plus mr-2"></i> Ver
+                        </a>
+                    </div>
+
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up" style="animation-delay: 0.1s;">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://osterpe.vtexassets.com/arquivos/ids/160126-1600-auto?v=638779978487100000&width=1600&height=auto&aspect=true);">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Cafetera Programable</h3>
+                        <p class="text-gray-500 text-sm mb-3">12 tazas, filtro permanente.</p>
+                        <p class="text-2xl font-extrabold text-brand-dark mb-4">$45.00</p>
+                        <a href="/tienda" class="inline-block px-6 py-2 bg-brand-blue text-brand-dark font-bold rounded-full hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                            <i class="fas fa-cart-plus mr-2"></i> Ver
+                        </a>
+                    </div>
+
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://osterpe.vtexassets.com/arquivos/ids/156726-1600-auto?v=637527285643270000&width=1600&height=auto&aspect=true');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Batidora de Mano</h3>
+                        <p class="text-gray-500 text-sm mb-3">5 velocidades, accesorios de cromo.</p>
+                        <p class="text-2xl font-extrabold text-red-500 mb-4">$29.99 <span class="text-gray-400 line-through text-lg">$35.00</span></p>
+                        <a href="/tienda" class="inline-block px-6 py-2 bg-brand-gold text-brand-dark font-bold rounded-full hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                            <i class="fas fa-cart-plus mr-2"></i> Ver
+                        </a>
+                    </div>
+
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up" style="animation-delay: 0.3s;">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://osterpe.vtexassets.com/arquivos/ids/156352-1600-auto?v=637387203792600000&width=1600&height=auto&aspect=truee');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Horno Tostador</h3>
+                        <p class="text-gray-500 text-sm mb-3">Capacidad de 10 litros, temporizador.</p>
+                        <p class="text-2xl font-extrabold text-brand-dark mb-4">$79.99</p>
+                        <a href="/tienda" class="inline-block px-6 py-2 bg-brand-blue text-brand-dark font-bold rounded-full hover:bg-yellow-500 transition-colors duration-200 transform hover:scale-105">
+                            <i class="fas fa-cart-plus mr-2"></i> Ver
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <section class="py-24 relative overflow-hidden">
+                <video
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    class="absolute inset-0 w-full h-full object-cover"
+                    poster="https://placehold.co/1920x550/005A9C/F3F4F6/png?text=Cargando+Video" 
+                >
+                    <source src="https://s7d9.scene7.com/is/content/NewellRubbermaid/WEB%20Video%20Pre-Sale%20Xtreme%20Mix%2040s%201920x550%20R2" type="video/mp4" />
+                    Tu navegador no soporta el elemento de video.
+                </video>
+
+                <div class="absolute inset-0 bg-brand-dark opacity-60"></div>
+
+                <div class="container mx-auto px-4 relative z-10 text-center text-white">
+                    <h2 class="text-5xl font-extrabold mb-4 animate-fade-in-up">¡OFERTAS RELÁMPAGO!</h2>
+                    <p class="text-2xl font-light mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">Solo por tiempo limitado: grandes descuentos en toda nuestra línea de cocción.</p>
+                    <a href="/ofertas" 
+                        class="inline-flex items-center px-10 py-4 bg-brand-gold text-brand-dark font-extrabold text-xl rounded-full hover:bg-yellow-500 transition-all duration-300 shadow-2xl transform hover:scale-110 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <i class="fas fa-bolt mr-3"></i>
+                        Comprar AHORA
+                    </a>
+                </div>
+            </section>
+        
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-extrabold text-center text-brand-light mb-12 animate-fade-in-up">
+                    <span class="text-brand-gold">Lanzamientos</span> Recientes
+                 </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://placehold.co/400x300/F3F4F6/005A9C/png?text=Lanzamiento+1');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Air Fryer Digital</h3>
+                        <p class="text-gray-500 text-sm mb-3">Cocina sin aceite. 8 programas preestablecidos.</p>
+                        <a href="#" class="text-brand-blue font-semibold hover:text-blue-800 transition-colors">Ver Detalles <i class="fas fa-chevron-right ml-1"></i></a>
+                    </div>
+                    
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up" style="animation-delay: 0.1s;">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://placehold.co/400x300/F3F4F6/005A9C/png?text=Lanzamiento+2');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Hervidor Eléctrico</h3>
+                        <p class="text-gray-500 text-sm mb-3">Apagado automático. Diseño de acero inoxidable.</p>
+                        <a href="#" class="text-brand-blue font-semibold hover:text-blue-800 transition-colors">Ver Detalles <i class="fas fa-chevron-right ml-1"></i></a>
+                    </div>
+
+                    <div class="product-card-hover bg-white p-6 rounded-xl shadow-xl text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="w-full h-48 bg-gray-100 rounded-lg mb-4 bg-contain bg-no-repeat bg-center" 
+                             style="background-image: url('https://placehold.co/400x300/F3F4F6/005A9C/png?text=Lanzamiento+3');">
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-1">Vaporizador de Ropa</h3>
+                        <p class="text-gray-500 text-sm mb-3">Potente y portátil. Elimina arrugas al instante.</p>
+                        <a href="#" class="text-brand-blue font-semibold hover:text-blue-800 transition-colors">Ver Detalles <i class="fas fa-chevron-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-dark text-gray-300 py-12 border-t border-gray-700">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-gray-700 pb-8 mb-8">
+                
+                <div class="col-span-2 md:col-span-1">
+                    <h4 class="text-2xl font-extrabold text-white mb-4">Oster<span class="text-brand-blue">Cart</span></h4>
+                    <p class="text-sm mb-4">Tu destino #1 para electrodomésticos de calidad Oster.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Comprar</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Licuadoras</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Cafeteras</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Ofertas</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Nuevos Productos</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Información</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Acerca de Nosotros</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Política de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Mapa del Sitio</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Servicio</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Contacto</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Devoluciones</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition-colors">Seguimiento de Pedido</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Contáctanos</h5>
+                    <p class="text-sm flex items-center mb-2"><i class="fas fa-envelope mr-3 text-brand-blue"></i>soporte&#64;ostercart.com</p>
+                    <p class="text-sm flex items-center mb-2"><i class="fas fa-phone mr-3 text-brand-blue"></i>+51 987 654 321</p>
+                    <p class="text-sm flex items-center"><i class="fas fa-map-marker-alt mr-3 text-brand-blue"></i>Av. Los Nogales 123, Lima</p>
+                </div>
+
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between pt-4">
+
+                <div class="flex space-x-2 mt-4 md:mt-0">
+                    <i class="fab fa-cc-visa text-2xl text-white"></i>
+                    <i class="fab fa-cc-mastercard text-2xl text-white"></i>
+                    <i class="fab fa-cc-paypal text-2xl text-white"></i>
+                    <i class="fab fa-cc-amex text-2xl text-white"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
     
 </body>
 </html>

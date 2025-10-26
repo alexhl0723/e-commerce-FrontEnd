@@ -410,44 +410,39 @@ export class ProductosComponent {
 
   
 cambiarEstadoProducto(producto: Producto) {
-  const nuevoEstado = producto.estado !== 1;
+  const nuevoEstado = producto.estado === 1 ? 0 : 1;
 
-  // 1. Actualizar la vista INMEDIATAMENTE (optimistic update)
-  const productosActualizados = this.productos().map(prod =>
-    prod.idProducto === producto.idProducto
-      ? { ...prod, estado: nuevoEstado ? 1 : 0 }
-      : prod
+  // Actualiza el estado localmente para reflejar el cambio en la vista
+  const productosActualizados = this.productos().map(p =>
+    p.idProducto === producto.idProducto
+      ? { ...p, estado: nuevoEstado }
+      : p
   );
-  this.productos.set([...productosActualizados]);
+  this.productos.set(productosActualizados);
 
-  // 2. Mostrar notificación amigable
-  this.notificationService.success(
-    'Estado actualizado',
-    `${producto.nombre} está ${nuevoEstado ? 'activo' : 'inactivo'}`
-  );
+  // Opcional: también puedes actualizar el stock si quieres que "Agotado" se muestre al desactivar
+  // Ejemplo: { ...p, estado: nuevoEstado, stock: nuevoEstado === 1 ? p.stock : 0 }
 
-  // 3. Hacer la petición al backend
+  // Llama al backend para actualizar el estado real
   this.productoService.actualizarEstado(producto.idProducto!, nuevoEstado).subscribe({
     next: () => {
-      console.log('Backend sincronizado correctamente ✅');
+      this.notificationService.success(
+        'Estado actualizado',
+        `El producto "${producto.nombre}" ahora está ${nuevoEstado === 1 ? 'activo' : 'inactivo'}.`
+      );
     },
     error: (err) => {
-      console.error('Error en backend pero ya se actualizó la vista:', err);
-
-      // 🔄 Opcional: revertir el cambio en caso de error
-      const revertidos = this.productos().map(prod =>
-        prod.idProducto === producto.idProducto
-          ? { ...prod, estado: producto.estado }
-          : prod
-      );
-      this.productos.set([...revertidos]);
-
       this.notificationService.error(
-        'Error al actualizar',
-        'No se pudo sincronizar con el servidor'
+        'Error al actualizar estado',
+        'No se pudo actualizar el estado del producto.'
       );
+      // Opcional: revertir el cambio local si falla el backend
+      this.productos.set(this.productos().map(p =>
+        p.idProducto === producto.idProducto
+          ? { ...p, estado: producto.estado }
+          : p
+      ));
     }
   });
 }
-
 }

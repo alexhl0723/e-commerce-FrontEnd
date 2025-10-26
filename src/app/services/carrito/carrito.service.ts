@@ -39,4 +39,10 @@ export class CarritoService {
       .set('cantidad', cantidad.toString());
     return this.http.put<Carrito>(`${this.apiUrl}/actualizar-cantidad`, null, { params });
   }
+
+  //Eliminar todos los item del carrito de un usuario despues de finalizar la compra
+  eliminarCarritoUsuario(idUsuario: number): Observable<void>{
+    return this.http.delete<void>(`${this.apiUrl}/usuario/${idUsuario}`);
+  }
+
 }

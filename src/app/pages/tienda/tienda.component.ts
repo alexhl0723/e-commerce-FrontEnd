@@ -244,4 +244,10 @@ get productosFiltrados(): Producto[] {
   verDetalleProducto(idProducto: number) {
     this.router.navigate(['/producto', idProducto]);
   }
+
+  //ir al ckeckout para finalizar la compra
+  irAlCheckout() {
+    this.toggleCarrito();
+    this.router.navigate(['/checkout']);
+  }
 }

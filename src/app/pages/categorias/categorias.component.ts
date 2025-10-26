@@ -6,6 +6,7 @@ import { Categoria } from '../../interfaces/categoria.interface';
 import { NotificationsComponent } from '../../components/shared/notifications/notifications.component';
 import { NotificationService } from '../../services/notification/notification.service';
 
+
 @Component({
   selector: 'app-categorias',
   imports: [CommonModule, FormsModule, NotificationsComponent],
