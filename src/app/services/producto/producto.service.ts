@@ -59,10 +59,10 @@ export class ProductoService {
     
     return this.http.post<any>(this.uploadUrl, formData, { headers });
   }
-  actualizarEstado(id: number, estado: boolean) {
-    return this.http.put(
-      `${this.baseUrl}/${id}/estado?estado=${estado}`,
-      {},
+ actualizarEstado(id: number, estado: number) {
+  return this.http.put(
+    `${this.baseUrl}/${id}/estado?estado=${estado}`,
+    {},
       {
         ...this.getHeader(),
         responseType: 'text' as 'json'

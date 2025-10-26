@@ -11,6 +11,7 @@ import { IndexComponent } from './pages/index/index.component';
 import { UserComponent } from './pages/user/user.component';
 import { TiendaComponent } from './pages/tienda/tienda.component';
 import { DetalleProductoComponent } from './pages/detalle-producto/detalle-producto.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: IndexComponent }, // index
@@ -24,5 +25,6 @@ export const routes: Routes = [
   { path: 'roles', component: RolesComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'probar-drag-and-drop', component: ProbarDragAndDropComponent },
-  { path: 'user', component: UserComponent }
+  { path: 'user', component: UserComponent },
+  { path: 'checkout', component:CheckoutComponent }
 ];

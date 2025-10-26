@@ -1,0 +1,94 @@
+<p>checkout works!</p>
+<div class="min-h-screen bg-gray-50 py-10">
+  <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+    <h1 class="text-3xl font-bold text-slate-800 mb-8">🧾 Detalle de tu compra</h1>
+
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-blue-600 text-white">
+          <th class="p-3 text-left">Producto</th>
+          <th class="p-3 text-left">Marca</th>
+          <th class="p-3 text-right">Precio</th>
+          <th class="p-3 text-center">Cantidad</th>
+          <th class="p-3 text-right">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of carrito()" class="border-b hover:bg-slate-50">
+          <td class="p-3">{{ item.producto?.nombre }}</td>
+          <td class="p-3">{{ item.producto?.marca }}</td>
+          <td class="p-3 text-right">S/ {{ item.producto?.precio | number:'1.2-2' }}</td>
+          <td class="p-3 text-center">{{ item.cantidad }}</td>
+          <td class="p-3 text-right font-medium text-green-600">
+            S/ {{ (item.producto?.precio || 0) * item.cantidad | number:'1.2-2' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="flex justify-end mt-6 border-t pt-4">
+      <h2 class="text-2xl font-bold text-slate-900">
+        Total: <span class="text-green-600">S/ {{ totalPedido() | number:'1.2-2' }}</span>
+      </h2>
+    </div>
+
+    <!-- 📦 Información de Envío (Formulario Estilizado) -->
+        <div class="mt-12 border-t-2 border-dashed border-gray-300 pt-8">
+          <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+            <svg class="w-6 h-6 mr-2 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+            Detalles de Envío y Contacto
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-1">
+              <label class="block text-slate-700 font-medium">Dirección de envío</label>
+              <input type="text" [(ngModel)]="direccionEnvio" placeholder="Ej. Av. Siempre Viva 742"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition duration-200" />
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-700 font-medium">Celular de contacto</label>
+              <input type="text" [(ngModel)]="celularContacto" placeholder="Ej. 999 999 999"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition duration-200" />
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-slate-700 font-medium">Método de pago</label>
+              <select [(ngModel)]="metodoPago"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none appearance-none bg-white transition duration-200 custom-select">
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Paypal">Paypal</option>
+                <option value="Transferencia">Transferencia</option>
+              </select>
+            </div>
+
+            <!-- 🚚 Fecha de envío (automática, no editable) -->
+            <div class="space-y-1">
+              <label class="block text-slate-700 font-medium">Fecha estimada de envío</label>
+              <input type="date" [value]="fechaEntrega | date:'yyyy-MM-dd'" readonly
+                class="w-full border border-gray-200 bg-gray-100 text-gray-700 rounded-lg px-4 py-3 cursor-not-allowed" />
+            </div>
+          </div>
+        </div>
+
+    <div class="mt-8 flex justify-between">
+      <button 
+        (click)="volverATienda()"
+        class="px-6 py-3 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200 transition">
+        ← Volver a la tienda
+      </button>
+
+      <div class="flex gap-4">
+        <button 
+          class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+          📄 Exportar PDF
+        </button>
+        <button 
+          (click)="finalizarCompra()"
+          class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+          🛒 Finalizar Compra
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

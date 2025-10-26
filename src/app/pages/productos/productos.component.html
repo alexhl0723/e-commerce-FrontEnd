@@ -423,15 +423,17 @@
                 </div>
               </td>
 
-              <!-- Estado -->
-              <td class="py-4 px-6">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                      [class]="producto.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
-                  <span class="w-1.5 h-1.5 rounded-full mr-1.5"
-                        [class]="producto.stock > 0 ? 'bg-green-400' : 'bg-red-400'"></span>
-                  {{ producto.stock > 0 ? 'Disponible' : 'Agotado' }}
-                </span>
-              </td>
+          <!-- ...existing code... -->
+          <!-- Estado -->
+          <td class="py-4 px-6">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                  [class]="producto.estado === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+              <span class="w-1.5 h-1.5 rounded-full mr-1.5"
+                    [class]="producto.estado === 1 ? 'bg-green-400' : 'bg-red-400'"></span>
+              {{ producto.estado === 1 ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <!-- ...existing code... -->
 
               <!-- Acciones -->
               <td class="py-4 px-6">
